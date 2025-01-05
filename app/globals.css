@@ -1,7 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+@layer utilities {
+  .border-base-300 {
+    border-color: #d1d5db; /* Replace with your desired color */
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
