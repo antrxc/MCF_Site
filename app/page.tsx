@@ -35,7 +35,7 @@ export default function Home() {
       </motion.header>
 
       {/* Hero Section */}
-      <section id="hero" className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-32 md:py-48">
+      <section id="hero" className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-32 md:py-48">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
