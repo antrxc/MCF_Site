@@ -1,37 +1,16 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { motion } from 'framer-motion'
-import useEmblaCarousel from 'embla-carousel-react'
-import Autoplay from 'embla-carousel-autoplay'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Logo } from '@/components/Logo'
-import Image from 'next/image'
-
-const products = [
-  { id: 1, name: "Standard Cabinet", description: "Our bestselling all-purpose cabinet", price: "$299", image: "/placeholder.svg?height=300&width=300" },
-  { id: 2, name: "Heavy-Duty Cabinet", description: "Extra sturdy for industrial use", price: "$499", image: "/placeholder.svg?height=300&width=300" },
-  { id: 3, name: "Slim Storage Cabinet", description: "Perfect for tight spaces", price: "$249", image: "/placeholder.svg?height=300&width=300" },
-  { id: 4, name: "Modular Cabinet System", description: "Customizable for your unique needs", price: "$399", image: "/placeholder.svg?height=300&width=300" },
-]
-
-const testimonials = [
-  { id: 1, name: "John Doe", company: "ABC Corp", text: "These cabinets have transformed our office storage. Highly recommended!" },
-  { id: 2, name: "Jane Smith", company: "XYZ Industries", text: "Durable, stylish, and perfect for our workshop. Couldn't be happier!" },
-  { id: 3, name: "Mike Johnson", company: "123 Enterprises", text: "The customer service is as solid as the cabinets. Great experience overall." },
-]
+import { BentoBox } from '@/components/BentoBox'
+import { ClientLogos } from '@/components/ClientLogos'
+import { Mail, Phone } from 'lucide-react'
 
 export default function Home() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()])
-  const [testimonialRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 5000 })])
-
-  const scrollPrev = () => emblaApi && emblaApi.scrollPrev()
-  const scrollNext = () => emblaApi && emblaApi.scrollNext()
-
   return (
     <div>
       {/* Header */}
@@ -47,7 +26,8 @@ export default function Home() {
             <ul className="flex space-x-6">
               <li><a href="#hero" className="text-gray-800 hover:text-gray-600">Home</a></li>
               <li><a href="#about" className="text-gray-800 hover:text-gray-600">About</a></li>
-              <li><a href="#products" className="text-gray-800 hover:text-gray-600">Products</a></li>
+              <li><a href="#gallery" className="text-gray-800 hover:text-gray-600">Gallery</a></li>
+              <li><a href="#clients" className="text-gray-800 hover:text-gray-600">Clients</a></li>
               <li><a href="#contact" className="text-gray-800 hover:text-gray-600">Contact</a></li>
             </ul>
           </nav>
@@ -62,19 +42,25 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="container mx-auto px-4 text-center"
         >
-          <div className="mb-8">
-            <Image
-              src="/placeholder.svg?height=120&width=120"
-              alt="Metal Cabinet Solutions Logo"
-              width={120}
-              height={120}
-              className="mx-auto"
-            />
-          </div>
+          <motion.div
+            animate={{ 
+              scale: [1, 1.05, 1],
+              rotate: [0, 2, -2, 0]
+            }}
+            transition={{ 
+              duration: 5, 
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 1
+            }}
+            className="mb-8 inline-block"
+          >
+            <Logo size="large" />
+          </motion.div>
           <h1 className="text-5xl md:text-7xl font-bold mb-4">Metal Cabinet Solutions</h1>
-          <p className="text-xl md:text-2xl mb-8">Stylish and Durable Storage for the Modern Age</p>
+          <p className="text-xl md:text-2xl mb-8">Crafting Durability, Delivering Excellence</p>
           <Button asChild size="lg" className="animate-pulse">
-            <a href="#products">Explore Our Products</a>
+            <a href="#contact">Get in Touch</a>
           </Button>
         </motion.div>
       </section>
@@ -97,17 +83,20 @@ export default function Home() {
             className="max-w-3xl mx-auto text-center"
           >
             <p className="text-lg mb-4">
-              At Metal Cabinet Solutions, we've been crafting high-quality metal cabinets for over two decades. Our commitment to durability, functionality, and sleek design has made us a trusted name in storage solutions.
+              At Metal Cabinet Solutions, we've been at the forefront of innovative storage solutions for over two decades. Our journey began with a simple goal: to create durable, functional, and aesthetically pleasing metal cabinets that stand the test of time.
+            </p>
+            <p className="text-lg mb-4">
+              Our team of skilled craftsmen and designers work tirelessly to push the boundaries of what's possible in metal fabrication. We combine cutting-edge technology with traditional craftsmanship to deliver cabinets that not only meet but exceed our clients' expectations.
             </p>
             <p className="text-lg">
-              Whether you're organizing a garage, upgrading your office, or outfitting an industrial space, we have the perfect cabinet for you. Our team of experts is dedicated to helping you find the ideal storage solution for your unique needs.
+              From custom designs for specific industries to our standard line of high-quality cabinets, we pride ourselves on our attention to detail, commitment to quality, and dedication to customer satisfaction. Choose Metal Cabinet Solutions for storage solutions that truly make a difference.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Products Section */}
-      <section id="products" className="py-16">
+      {/* Gallery Section */}
+      <section id="gallery" className="py-16">
         <div className="container mx-auto px-4">
           <motion.h2 
             initial={{ opacity: 0 }}
@@ -115,42 +104,14 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-4xl font-bold mb-8 text-center"
           >
-            Our Products
+            Our Gallery
           </motion.h2>
-          <div className="relative">
-            <div className="embla" ref={emblaRef}>
-              <div className="embla__container">
-                {products.map((product) => (
-                  <div key={product.id} className="embla__slide px-4">
-                    <Card className="h-full">
-                      <CardHeader>
-                        <CardTitle>{product.name}</CardTitle>
-                        <CardDescription>{product.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <img src={product.image} alt={product.name} className="w-full h-48 object-cover mb-4" />
-                        <p className="text-2xl font-bold">{product.price}</p>
-                      </CardContent>
-                      <CardFooter>
-                        <Button className="w-full">Learn More</Button>
-                      </CardFooter>
-                    </Card>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <Button variant="outline" className="absolute left-0 top-1/2 transform -translate-y-1/2" onClick={scrollPrev}>
-              <ChevronLeft className="h-6 w-6" />
-            </Button>
-            <Button variant="outline" className="absolute right-0 top-1/2 transform -translate-y-1/2" onClick={scrollNext}>
-              <ChevronRight className="h-6 w-6" />
-            </Button>
-          </div>
+          <BentoBox />
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-16 bg-gray-100">
+      {/* Clients Section */}
+      <section id="clients" className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <motion.h2 
             initial={{ opacity: 0 }}
@@ -158,25 +119,9 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-4xl font-bold mb-8 text-center"
           >
-            What Our Customers Say
+            Our Clients
           </motion.h2>
-          <div className="embla" ref={testimonialRef}>
-            <div className="embla__container">
-              {testimonials.map((testimonial) => (
-                <div key={testimonial.id} className="embla__slide px-4">
-                  <Card className="h-full">
-                    <CardHeader>
-                      <CardTitle>{testimonial.name}</CardTitle>
-                      <CardDescription>{testimonial.company}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="italic">&ldquo;{testimonial.text}&rdquo;</p>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ClientLogos />
         </div>
       </section>
 
@@ -210,7 +155,21 @@ export default function Home() {
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
                 <Textarea id="message" placeholder="Your message here..." />
               </div>
-              <Button type="submit" className="w-full">Send Message</Button>
+              <div className="flex space-x-4">
+                <Button type="submit" className="flex-1">Send Message</Button>
+                <Button asChild variant="outline" className="flex items-center justify-center">
+                  <a href="mailto:info@metalcabinetsolutions.com">
+                    <Mail className="mr-2 h-4 w-4" />
+                    Email Us
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="flex items-center justify-center">
+                  <a href="tel:+1234567890">
+                    <Phone className="mr-2 h-4 w-4" />
+                    Call Us
+                  </a>
+                </Button>
+              </div>
             </form>
           </motion.div>
         </div>
@@ -218,9 +177,17 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-4 flex flex-col items-center space-y-4">
-          <Logo />
-          <p>&copy; 2023 Metal Cabinet Solutions. All rights reserved.</p>
+        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+          <div className="mb-4 md:mb-0">
+            <Logo />
+            <p className="mt-2">Crafting Durability, Delivering Excellence</p>
+          </div>
+          <div className="text-center md:text-right">
+            <p>123 Metal Street, Steel City, ST 12345</p>
+            <p>Phone: (123) 456-7890</p>
+            <p>Email: info@metalcabinetsolutions.com</p>
+            <p>GSTIN: 12ABCDE3456F7Z8</p>
+          </div>
         </div>
       </footer>
     </div>
